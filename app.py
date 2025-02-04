@@ -366,9 +366,8 @@ def add_header(response):
     return response
 
 
-#if __name__ == '__main__':
- #   app.run(debug=True)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
 
-
-application = app
+application = app  # This is necessary for Gunicorn to find the app
 
