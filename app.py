@@ -15,7 +15,8 @@ app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev-key-123')
 
 # PostgreSQL as default; override with DATABASE_URL if set in the environment.
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://admin1:McFcok11-12@car-comparison-db.c9uey4eq66ax.us-east-1.rds.amazonaws.com:5432/postgres'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+
 
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
