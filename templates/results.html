@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Comparison Results</h2>
+
+    <!-- Best Performance -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">🏆 Best Performance</div>
+        <div class="card-body">
+            {% if best_perf %}
+                {% for result in best_perf %}
+                    <p><strong>{{ result.car.company }}</strong></p>
+                    <p>Horsepower: {{ result.car.horsepower }} HP</p>
+                    <p>Engine: {{ result.car.engine_capacity }}L with {{ result.car.cylinders }} cylinders</p>
+                    <hr>
+                {% endfor %}
+            {% else %}
+                <p>No performance data available.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Best Value -->
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">💰 Best Value for Money</div>
+        <div class="card-body">
+            {% if best_value %}
+                {% for result in best_value %}
+                    <p><strong>{{ result.car.company }}</strong></p>
+                    <p>Value Score: {{ result.value_score }}</p>
+                    <p>Total Cost: ${{ result.total_cost }}</p>
+                    <hr>
+                {% endfor %}
+            {% else %}
+                <p>No value data available.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Cheapest Option -->
+    <div class="card mb-4">
+        <div class="card-header bg-warning">💸 Cheapest Option</div>
+        <div class="card-body">
+            {% if cheapest %}
+                {% for result in cheapest %}
+                    <p><strong>{{ result.car.company }}</strong></p>
+                    <p>Total Cost: ${{ result.total_cost }}</p>
+                    <hr>
+                {% endfor %}
+            {% else %}
+                <p>No cost data available.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-warning">💸 Cheapest Option</div>
+        <div class="card-body">
+            {% if cheapest %}
+                {% for result in cheapest %}
+                    <p><strong>{{ result.car.company }}</strong></p>
+                    <p>Total Cost: ${{ result.total_cost }}</p>
+                    <hr>
+                {% endfor %}
+            {% else %}
+                <p>No cost data available.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Performance vs Value Chart -->
+    <div class="container mt-4">
+        <h2>Performance vs Value Chart</h2>
+       <!---- <pre>{{ cars_data | tojson }}</pre> -->
+
+        <canvas id="carComparisonChart" width="400" height="200"></canvas>
+    </div>
+
+    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary mt-4">Back to Dashboard</a>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const ctx = document.getElementById('carComparisonChart').getContext('2d');
+
+        // Pass the data from Flask directly into JavaScript
+        const carData = {{ cars_data | tojson | safe }};
+
+        const carLabels = carData.map(car => car.company);
+        const performanceScores = carData.map(car => car.perf_score);
+        const valueScores = carData.map(car => car.value_score);
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: carLabels,
+                datasets: [
+                    {
+                        label: 'Performance Score',
+                        data: performanceScores,
+                        backgroundColor: 'rgba(52, 152, 219, 0.7)',  // Blue
+                        borderColor: 'rgba(41, 128, 185, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Value Score',
+                        data: valueScores,
+                        backgroundColor: 'rgba(46, 204, 113, 0.7)',  // Green
+                        borderColor: 'rgba(39, 174, 96, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+{% endblock %}

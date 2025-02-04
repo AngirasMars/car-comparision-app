@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Comparison</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Welcome to Car Comparison!</h1>
+
+    <form action="/" method="POST">
+        <h2>Car 1 Details</h2>
+        <label for="car1_name">Car Name:</label><br>
+        <input type="text" id="car1_name" name="car1_name" required><br><br>
+
+        <label for="car1_price">Price:</label><br>
+        <input type="number" id="car1_price" name="car1_price" required><br><br>
+
+        <label for="car1_engine">Engine Type:</label><br>
+        <input type="text" id="car1_engine" name="car1_engine" required><br><br>
+
+        <label for="car1_horsepower">Horsepower:</label><br>
+        <input type="number" id="car1_horsepower" name="car1_horsepower"><br><br>
+
+        <label for="car1_fuel_efficiency">Fuel Efficiency (mpg):</label><br>
+        <input type="number" id="car1_fuel_efficiency" name="car1_fuel_efficiency"><br><br>
+
+        <label for="car1_seats">Seats:</label><br>
+        <input type="number" id="car1_seats" name="car1_seats"><br><br>
+
+        <label for="car1_audio_system">Audio System:</label><br>
+        <input type="text" id="car1_audio_system" name="car1_audio_system"><br><br>
+
+        <label for="car1_airbags">Airbags:</label><br>
+        <input type="text" id="car1_airbags" name="car1_airbags"><br><br>
+
+        <h2>Car 2 Details</h2>
+        <label for="car2_name">Car Name:</label><br>
+        <input type="text" id="car2_name" name="car2_name" required><br><br>
+
+        <label for="car2_price">Price:</label><br>
+        <input type="number" id="car2_price" name="car2_price" required><br><br>
+
+        <label for="car2_engine">Engine Type:</label><br>
+        <input type="text" id="car2_engine" name="car2_engine" required><br><br>
+
+        <label for="car2_horsepower">Horsepower:</label><br>
+        <input type="number" id="car2_horsepower" name="car2_horsepower"><br><br>
+
+        <label for="car2_fuel_efficiency">Fuel Efficiency (mpg):</label><br>
+        <input type="number" id="car2_fuel_efficiency" name="car2_fuel_efficiency"><br><br>
+
+        <label for="car2_seats">Seats:</label><br>
+        <input type="number" id="car2_seats" name="car2_seats"><br><br>
+
+        <label for="car2_audio_system">Audio System:</label><br>
+        <input type="text" id="car2_audio_system" name="car2_audio_system"><br><br>
+
+        <label for="car2_airbags">Airbags:</label><br>
+        <input type="text" id="car2_airbags" name="car2_airbags"><br><br>
+
+        <input type="submit" value="Compare Cars">
+    </form>
+
+    {% if car1_name and car2_name %}
+    <h2>Comparison Results:</h2>
+    <p><strong>{{ car1_name }}</strong> vs <strong>{{ car2_name }}</strong></p>
+    <p><strong>Price:</strong> ${{ car1_price }} vs ${{ car2_price }}</p>
+    <p><strong>Engine Type:</strong> {{ car1_engine }} vs {{ car2_engine }}</p>
+    <p><strong>Horsepower:</strong> {{ car1_horsepower }} vs {{ car2_horsepower }}</p>
+    <p><strong>Fuel Efficiency:</strong> {{ car1_fuel_efficiency }} mpg vs {{ car2_fuel_efficiency }} mpg</p>
+    <p><strong>Seats:</strong> {{ car1_seats }} vs {{ car2_seats }}</p>
+    <p><strong>Audio System:</strong> {{ car1_audio_system }} vs {{ car2_audio_system }}</p>
+    <p><strong>Airbags:</strong> {{ car1_airbags }} vs {{ car2_airbags }}</p>
+    {% endif %}
+</body>
+</html>

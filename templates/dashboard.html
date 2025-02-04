@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>Your Cars</h2>
+    {% if cars %}
+        <ul>
+            {% for car in cars %}
+                <li>{{ car.company }} {{ car.model }} - Engine: {{ car.engine_displacement }}L, {{ car.horsepower }} HP</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have not added any cars yet.</p>
+    {% endif %}
+    <a href="{{ url_for('add_car') }}">Add a new car</a>
+</div>
+{% endblock %}

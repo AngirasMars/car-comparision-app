@@ -1,0 +1,242 @@
+/* Custom CSS */
+
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Dark Mode */
+body.dark-mode {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+}
+
+/* Header Styling */
+header {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 1em 2em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8em;
+}
+
+nav a {
+    color: #ecf0f1;
+    margin-right: 1em;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #1abc9c;
+}
+
+/* Main Container */
+.container {
+    max-width: 900px;
+    margin: 2em auto;
+    padding: 2em;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+body.dark-mode .container {
+    background-color: #34495e;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Flash Messages */
+.flashes {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1em;
+}
+
+.flashes li {
+    padding: 1em;
+    border-radius: 5px;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.flashes .success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.flashes .danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.flashes .info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+body.dark-mode .flashes .success {
+    background-color: #27ae60;
+    color: #ecf0f1;
+}
+
+body.dark-mode .flashes .danger {
+    background-color: #c0392b;
+    color: #ecf0f1;
+}
+
+body.dark-mode .flashes .info {
+    background-color: #2980b9;
+    color: #ecf0f1;
+}
+
+/* Forms Styling */
+form label {
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight: 600;
+}
+
+form input, form button {
+    width: 100%;
+    padding: 0.75em;
+    margin-bottom: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: box-shadow 0.3s ease;
+}
+
+form input:focus {
+    border-color: #1abc9c;
+    outline: none;
+    box-shadow: 0 0 8px rgba(26, 188, 156, 0.7);
+}
+
+form button {
+    background-color: #1abc9c;
+    color: white;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+form button:hover {
+    background-color: #16a085;
+    transform: scale(1.05);
+}
+
+/* Card Styles */
+.card {
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 10px;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    padding: 1em;
+    font-size: 1.2em;
+}
+
+.card-body {
+    padding: 1.5em;
+    font-size: 1em;
+}
+
+body.dark-mode .card {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+}
+
+body.dark-mode .card-header {
+    background-color: #34495e;
+}
+
+/* Navigation Button */
+.btn {
+    display: inline-block;
+    padding: 0.75em 1.5em;
+    background-color: #34495e;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn:hover {
+    background-color: #2c3e50;
+    transform: scale(1.05);
+}
+
+/* Dark Mode Toggle */
+.dark-mode-toggle {
+    background-color: #1abc9c;
+    color: white;
+    padding: 0.5em 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.dark-mode-toggle:hover {
+    background-color: #16a085;
+}
+
+/* Loader Animation */
+.loader {
+    border: 6px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 6px solid #1abc9c;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+    display: none;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 1em;
+    }
+
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    nav a {
+        display: block;
+        margin: 0.5em 0;
+    }
+}

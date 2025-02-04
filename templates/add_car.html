@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>Add Car Details</h2>
+    <form method="POST" action="{{ url_for('add_car') }}">
+        <h3>Engine Details</h3>
+        <label>Company:</label>
+        <input type="text" name="company" required>
+        <br>
+        <label>Model:</label>
+        <input type="text" name="model" required>
+        <br>
+        <label>Engine Displacement (L):</label>
+        <input type="number" step="0.1" name="engine_displacement" required>
+        <br>
+        <label>Horsepower (HP):</label>
+        <input type="number" step="0.1" name="horsepower" required>
+        <br>
+        <label>Torque (Nm):</label>
+        <input type="number" step="0.1" name="torque" required>
+        <br>
+        <label>Number of Cylinders:</label>
+        <input type="number" name="cylinders" required>
+        <br>
+        <label>Turbocharged:</label>
+        <input type="checkbox" name="turbocharged">
+        <br>
+        <label>Fuel Injection Type:</label>
+        <input type="text" name="fuel_injection_type" required>
+        <br>
+
+        <h3>Interior Details</h3>
+        <label>Touchscreen Size (inches):</label>
+        <input type="number" step="0.1" name="touchscreen_size">
+        <br>
+        <label>Apple CarPlay:</label>
+        <input type="checkbox" name="apple_carplay">
+        <br>
+        <label>Android Auto:</label>
+        <input type="checkbox" name="android_auto">
+        <br>
+        <label>Wireless Charging:</label>
+        <input type="checkbox" name="wireless_charging">
+        <br>
+        <label>Premium Sound System:</label>
+        <input type="checkbox" name="premium_sound_system">
+        <br>
+        <label>Heated Seats:</label>
+        <input type="checkbox" name="heated_seats">
+        <br>
+        <label>Ventilated Seats:</label>
+        <input type="checkbox" name="ventilated_seats">
+        <br>
+        <label>Massage Seats:</label>
+        <input type="checkbox" name="massage_seats">
+        <br>
+        <label>Power Adjustable Seats:</label>
+        <input type="checkbox" name="power_adjustable_seats">
+        <br>
+        <label>Reclining Rear Seats:</label>
+        <input type="checkbox" name="reclining_rear_seats">
+        <br>
+        <label>Premium Upholstery:</label>
+        <input type="checkbox" name="premium_upholstery">
+        <br>
+        <label>Climate Control Type (e.g., Dual-Zone):</label>
+        <input type="text" name="climate_control_type">
+        <br>
+        <label>Heated Steering:</label>
+        <input type="checkbox" name="heated_steering">
+        <br>
+        <label>Digital Instrument Cluster:</label>
+        <input type="checkbox" name="digital_instrument_cluster">
+        <br>
+        <label>AR-HUD:</label>
+        <input type="checkbox" name="ar_hud">
+        <br>
+        <label>Gesture & Voice Control:</label>
+        <input type="checkbox" name="gesture_voice_control">
+        <br>
+        <label>Smart Ambient Lighting:</label>
+        <input type="checkbox" name="smart_ambient_lighting">
+        <br>
+        <label>Adaptive Cruise Control:</label>
+        <input type="checkbox" name="adaptive_cruise_control">
+        <br>
+        <label>Lane Assist:</label>
+        <input type="checkbox" name="lane_assist">
+        <br>
+        <label>Blind Spot Monitoring:</label>
+        <input type="checkbox" name="blind_spot_monitoring">
+        <br>
+        <label>Driver Monitoring:</label>
+        <input type="checkbox" name="driver_monitoring">
+        <br>
+        <label>Foldable Rear Seats:</label>
+        <input type="checkbox" name="foldable_rear_seats">
+        <br>
+        <label>Configurable Center Console:</label>
+        <input type="checkbox" name="configurable_center_console">
+        <br>
+        <label>Panoramic Sunroof:</label>
+        <input type="checkbox" name="panoramic_sunroof">
+        <br>
+        <label>Electrochromic Roof:</label>
+        <input type="checkbox" name="electrochromic_roof">
+        <br>
+        <label>Digital Key:</label>
+        <input type="checkbox" name="digital_key">
+        <br>
+        <label>Remote Start:</label>
+        <input type="checkbox" name="remote_start">
+        <br>
+
+        <h3>Financial Details</h3>
+        <label>Car Price (On-Road Price):</label>
+        <input type="number" step="0.01" name="car_price" required>
+        <br>
+        <label>Down Payment:</label>
+        <input type="number" step="0.01" name="down_payment" required>
+        <br>
+        <label>Interest Rate (% per annum):</label>
+        <input type="number" step="0.01" name="interest_rate" required>
+        <br>
+        <label>Loan Term (months):</label>
+        <input type="number" name="loan_term" required>
+        <br>
+        <label>Trade-In Value (if any):</label>
+        <input type="number" step="0.01" name="trade_in_value">
+        <br>
+        <label>Additional Costs (Insurance, taxes, etc.):</label>
+        <input type="number" step="0.01" name="additional_costs">
+        <br><br>
+        <button type="submit">Submit Car Details</button>
+    </form>
+</div>
+{% endblock %}
