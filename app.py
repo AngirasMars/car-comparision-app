@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
-load_dotenv()
+from sqlalchemy import text
 import os
 import logging
 import click
@@ -11,14 +11,15 @@ import click
 # --------------------
 # App Configuration
 # --------------------
+load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev-key-123')
 
 # PostgreSQL as default; override with DATABASE_URL if set in the environment.
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
-
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+# Initialize extensions
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -26,7 +27,7 @@ login_manager.login_view = 'login'
 # Debugging database connection
 try:
     with app.app_context():
-        db.session.execute('SELECT 1')  # Test simple query
+        db.session.execute(text('SELECT 1'))  # Test simple query
     app.logger.info("Database connection successful!")
 except Exception as e:
     app.logger.error(f"Database connection failed: {e}")
@@ -153,7 +154,7 @@ def dashboard():
 def add_car():
     if request.method == 'POST':
         try:
-            app.logger.info("Form Data Received:", request.form)
+            app.logger.info(f"Form Data Received: {request.form}")
 
             new_car = Car(
                 user_id=current_user.id,
@@ -203,6 +204,62 @@ def add_car():
 
     return render_template('add_car.html')
 
+def calculate_scores(cars):
+    if not cars:
+        return [], [], []
+
+    try:
+        max_hp = max(car.horsepower for car in cars) or 1
+        max_engine = max(car.engine_capacity for car in cars) or 1
+        max_cylinders = max(car.cylinders for car in cars) or 1
+
+        results = []
+        for car in cars:
+            # Performance Score (0-100)
+            perf_score = (
+                (car.horsepower / max_hp * 40) +
+                (car.engine_capacity / max_engine * 30) +
+                (car.cylinders / max_cylinders * 30)
+            )
+
+            # Interior Score (0-100)
+            interior_score = (
+                20 * int(car.interior.leather_seats) +
+                15 * int(car.interior.ventilated_seats) +
+                10 * int(car.interior.heated_steering) +
+                min(car.interior.infotainment_size * 2, 20)  # Max 20 points for 10\"+ screens
+            )
+
+            # Financial Calculations
+            monthly_interest = car.finance.interest_rate / 100 / 12
+            total_payments = car.finance.downpayment + sum(
+                (car.finance.downpayment * monthly_interest) * 
+                (1 + monthly_interest) ** month 
+                for month in range(car.finance.loan_term)
+            )
+
+            # Value Score (points per $1000)
+            value_score = ((perf_score + interior_score) / (total_payments / 1000)) if total_payments else 0
+
+            results.append({
+                'car': car,
+                'perf_score': round(perf_score, 1),
+                'interior_score': round(interior_score, 1),
+                'total_cost': round(total_payments, 2),
+                'value_score': round(value_score, 2)
+            })
+
+        best_performance = sorted(results, key=lambda x: x['perf_score'], reverse=True)
+        best_value = sorted(results, key=lambda x: x['value_score'], reverse=True)
+        cheapest = sorted(results, key=lambda x: x['total_cost'])
+
+        return best_performance[:3], best_value[:3], cheapest[:3]
+
+    except Exception as e:
+        app.logger.error(f'Error calculating scores: {e}')
+        return [], [], []
+
+
 @app.route('/results')
 @login_required
 def results():
@@ -231,4 +288,12 @@ def add_header(response):
     response.headers["Expires"] = "0"
     return response
 
+# --------------------
+# Run the App
+# --------------------
 application = app
+
+if __name__ == '__main__':
+    import os
+    port = int(os.environ.get('PORT', 8080))
+    app.run(host='0.0.0.0', port=port, debug=True)
