@@ -24,6 +24,14 @@ db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
+# --------------------
+# Request Logging for Debugging
+# --------------------
+@app.before_request
+def log_request_info():
+    app.logger.info(f"Request Method: {request.method}, Path: {request.path}")
+
+
 # Debugging database connection
 try:
     with app.app_context():
