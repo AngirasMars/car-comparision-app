@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
-from dotenv import load_dotenv
+
 from sqlalchemy import text
 import os
 import logging
@@ -11,26 +11,18 @@ import click
 # --------------------
 # App Configuration
 # --------------------
-load_dotenv()
+
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev-key-123')
 
 # PostgreSQL as default; override with DATABASE_URL if set in the environment.
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'postgresql://postgres:McFcok11-12@localhost/car_db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize extensions
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
-
-# --------------------
-# Request Logging for Debugging
-# --------------------
-@app.before_request
-def log_request_info():
-    app.logger.info(f"Request Method: {request.method}, Path: {request.path}")
-
 
 # Debugging database connection
 try:
@@ -299,9 +291,10 @@ def add_header(response):
 # --------------------
 # Run the App
 # --------------------
+if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
+    app.run(debug=True)
+
 application = app
 
-if __name__ == '__main__':
-    import os
-    port = int(os.environ.get('PORT', 8080))
-    app.run(host='0.0.0.0', port=port, debug=True)
