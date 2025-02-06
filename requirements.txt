@@ -34,6 +34,7 @@ psycopg2-binary==2.9.10
 pycparser==2.22
 PyMySQL==1.1.1
 gunicorn
+python-dotenv
 
 pytest==8.3.3
 python-dateutil==2.9.0.post0
